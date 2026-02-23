@@ -91,6 +91,7 @@ app.add_middleware(
         "https://layzzbe.uz",           # Production frontend
         "https://www.layzzbe.uz",
         "https://layzzbe-market.onrender.com",  # Render backend (if needed for self-calls)
+        "https://layzzbe-market.vercel.app",
     ],
     allow_credentials=True,
     allow_methods=["*"],
