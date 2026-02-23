@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-neon-blue: #00f0ff;
+  --color-neon-purple: #b000ff;
+  --color-neon-pink: #ff0099;
+}
+
+body {
+  background-color: var(--color-slate-950);
+  color: var(--color-slate-200);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Inter', sans-serif;
+}
+
+@utility text-glow {
+  text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(0, 240, 255, 0.3);
+}
+
+@utility box-glow {
+  box-shadow: 0 0 15px rgba(176, 0, 255, 0.4);
+}
+
+@utility box-glow-hover {
+  &:hover {
+    box-shadow: 0 0 25px rgba(255, 0, 153, 0.6);
+  }
+}
