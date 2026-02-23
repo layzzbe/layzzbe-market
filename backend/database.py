@@ -1,16 +1,23 @@
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
+from dotenv import load_dotenv
+import os
 
-# 1. Ma'lumotlar bazasi URL manzili (MySQL XAMPP orqali)
-# root nomli admin va bo'sh parol bilan 3306 portida 'layzzbe_market' bazasiga ulanish
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://avnadmin:AVNS_8mTQ3u9mc0zTpiOKzgU@layzzbe-market-db-layzzbe.c.aivencloud.com:19488/layzzbe_market"
+# .env fayldan muhit o'zgaruvchilarini yuklash
+load_dotenv()
 
-# 2. MySQL uchun engine yaratish. 
+# Ma'lumotlar bazasi URL manzili — .env fayldan o'qiladi (xavfsiz)
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not SQLALCHEMY_DATABASE_URL:
+    raise RuntimeError("DATABASE_URL muhit o'zgaruvchisi topilmadi! .env faylini tekshiring.")
+
+# MySQL uchun engine yaratish
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
 
-# 3. Sessiya (Session) yaratish. Biz DB bilan aloqani shu xotira orqali boshqaramiz.
+# Sessiya (Session) yaratish
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-# 4. Asosiy model (Base) klasi. Bizning hamma modellari (jadvallar) shundan olinadi.
+# Asosiy model (Base) klasi
 Base = declarative_base()
