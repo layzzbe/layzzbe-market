@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { API_URL } from '../utils/api';
 
 const SettingsContext = createContext({});
 
@@ -8,7 +9,7 @@ export const SettingsProvider = ({ children }) => {
 
     const fetchSettings = useCallback(async () => {
         try {
-            const res = await fetch('/api/settings/public');
+            const res = await fetch(`${API_URL}/api/settings/public`);
             if (res.ok) {
                 const data = await res.json();
                 setSettings(data);

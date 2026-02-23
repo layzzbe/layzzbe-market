@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Lock, AlertCircle, Activity } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_URL } from '../utils/api';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -21,7 +22,7 @@ const Login = () => {
             formData.append('username', email); // FastAPI OAuth2 kutayotgan nomi
             formData.append('password', password);
 
-            const response = await fetch('/api/auth/login', {
+            const response = await fetch(`${API_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

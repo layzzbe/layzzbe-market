@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { UserPlus, AlertCircle, Activity } from 'lucide-react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_URL } from '../utils/api';
 
 const Register = () => {
     const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Register = () => {
         setError('');
 
         try {
-            const response = await fetch('/api/auth/register', {
+            const response = await fetch(`${API_URL}/api/auth/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

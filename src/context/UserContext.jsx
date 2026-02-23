@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
+import { API_URL } from '../utils/api';
 
 const UserContext = createContext(null);
 
@@ -10,7 +11,7 @@ export const UserProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (!token) { setUser(null); setLoading(false); return null; }
         try {
-            const res = await fetch('/api/auth/me', {
+            const res = await fetch(`${API_URL}/api/auth/me`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (!res.ok) { localStorage.removeItem('token'); setUser(null); return null; }

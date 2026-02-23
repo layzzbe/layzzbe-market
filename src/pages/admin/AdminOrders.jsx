@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Search, RefreshCw, User, Package, Calendar, DollarSign } from 'lucide-react';
 import { useOutletContext } from 'react-router-dom';
+import { API_URL } from '../../utils/api';
 
 const USD_TO_UZS = 12800;
 
@@ -20,7 +21,7 @@ const AdminOrders = () => {
         setIsLoading(true);
         const token = localStorage.getItem('token');
         try {
-            const res = await fetch('/api/admin/orders', {
+            const res = await fetch(`${API_URL}/api/admin/orders`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) setOrders(await res.json());

@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   server: {
     proxy: {
-      // All /api/* requests → FastAPI on port 8000
+      // All /api/* requests → FastAPI
       '/api': {
         target: 'http://127.0.0.1:8000',
         changeOrigin: true,

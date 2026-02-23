@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_URL } from '../utils/api';
 
 const ProductContext = createContext();
 
@@ -11,7 +12,7 @@ export const ProductProvider = ({ children }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await fetch('/api/products');
+                const response = await fetch(`${API_URL}/api/products`);
                 if (!response.ok) {
                     throw new Error("Tarmoqda xatolik yuz berdi");
                 }

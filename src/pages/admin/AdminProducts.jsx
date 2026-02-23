@@ -4,6 +4,7 @@ import { useOutletContext } from 'react-router-dom';
 import { Plus, Edit2, Trash2, Search, Filter, X, Save, AlertCircle } from 'lucide-react';
 import { useProducts } from '../../context/ProductContext';
 import { useCurrency } from '../../context/CurrencyContext';
+import { API_URL } from '../../utils/api';
 
 const AdminProducts = () => {
     // Profilni Layout.jsx orqali olish va global maxsulotlar
@@ -102,7 +103,7 @@ const AdminProducts = () => {
 
             const method = isEditing ? 'PUT' : 'POST';
 
-            const response = await fetch(url, {
+            const response = await fetch(`${API_URL}${url}`, {
                 method: method,
                 headers: {
                     'Content-Type': 'application/json',
@@ -140,7 +141,7 @@ const AdminProducts = () => {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`/api/products/${productId}`, {
+            const response = await fetch(`${API_URL}/api/products/${productId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`

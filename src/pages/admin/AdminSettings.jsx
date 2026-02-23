@@ -5,10 +5,11 @@ import {
     ChevronDown, Zap, Globe, Lock, Save, CheckCircle, RefreshCw,
     Instagram, Wrench, Mail, BarChart2, ToggleLeft, ToggleRight
 } from 'lucide-react';
+import { API_URL } from '../../utils/api';
 
 const API = async (path, method = 'GET', body) => {
     const token = localStorage.getItem('token');
-    const res = await fetch(path, {
+    const res = await fetch(`${API_URL}${path}`, {
         method,
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         ...(body ? { body: JSON.stringify(body) } : {}),
@@ -74,8 +75,8 @@ const Section = ({ icon: Icon, title, description, color = 'neon-blue', fields, 
                                             type="button"
                                             onClick={() => onChange(key, values[key] === 'true' ? 'false' : 'true')}
                                             className={`flex items-center gap-3 px-4 py-3 rounded-xl border transition-all w-full ${values[key] === 'true'
-                                                    ? 'bg-yellow-400/10 border-yellow-400/40 text-yellow-300'
-                                                    : 'bg-slate-800 border-slate-700 text-slate-400'
+                                                ? 'bg-yellow-400/10 border-yellow-400/40 text-yellow-300'
+                                                : 'bg-slate-800 border-slate-700 text-slate-400'
                                                 }`}
                                         >
                                             <div className={`w-10 h-6 rounded-full relative transition-colors ${values[key] === 'true' ? 'bg-yellow-400' : 'bg-slate-700'}`}>

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Users, Shield, User, Trash2, Search, X, ShoppingBag, DollarSign, Calendar, CreditCard, Package, ChevronRight, Edit2, Lock, CheckCircle } from 'lucide-react';
 import { useOutletContext } from 'react-router-dom';
+import { API_URL } from '../../utils/api';
 
 // ─── Yordamchi funksiyalar ───────────────────────────────────────
 const formatDate = (dateStr) => {
@@ -41,7 +42,7 @@ const RoleEditModal = ({ userItem, onClose, onUpdate }) => {
 
         // Rolni yangilash
         try {
-            const res = await fetch(`/api/users/${userItem.id}/role-update`, {
+            const res = await fetch(`${API_URL}/api/users/${userItem.id}/role-update`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ role: selectedRole })
@@ -60,7 +61,7 @@ const RoleEditModal = ({ userItem, onClose, onUpdate }) => {
                 return;
             }
             try {
-                const res = await fetch(`/api/users/${userItem.id}/reset-password`, {
+                const res = await fetch(`${API_URL}/api/users/${userItem.id}/reset-password`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                     body: JSON.stringify({ new_password: newPassword })
@@ -121,8 +122,8 @@ const RoleEditModal = ({ userItem, onClose, onUpdate }) => {
                             {ROLES.map(r => (
                                 <button key={r.value} onClick={() => setSelectedRole(r.value)}
                                     className={`w-full flex items-center gap-3 p-3.5 rounded-xl border transition-all text-left ${selectedRole === r.value
-                                            ? `${r.bg} ${r.border} shadow-[0_0_12px_rgba(0,0,0,0.3)]`
-                                            : 'bg-slate-950/50 border-slate-800 hover:border-slate-700'
+                                        ? `${r.bg} ${r.border} shadow-[0_0_12px_rgba(0,0,0,0.3)]`
+                                        : 'bg-slate-950/50 border-slate-800 hover:border-slate-700'
                                         }`}
                                 >
                                     <div className={`w-4 h-4 rounded-full border-2 flex items-center justify-center shrink-0 ${selectedRole === r.value ? r.border.replace('border-', 'border-') + ' ' + r.color.replace('text-', 'bg-') : 'border-slate-700'
@@ -178,7 +179,7 @@ const UserDetailModal = ({ userId, currentUser, onClose }) => {
         const fetchDetail = async () => {
             try {
                 const token = localStorage.getItem('token');
-                const res = await fetch(`/api/users/${userId}/detail`, {
+                const res = await fetch(`${API_URL}/api/users/${userId}/detail`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (res.ok) setDetail(await res.json());
@@ -343,7 +344,7 @@ const AdminUsers = () => {
             try {
                 const token = localStorage.getItem('token');
                 if (!token) return;
-                const response = await fetch('/api/users', {
+                const response = await fetch(`${API_URL}/api/users`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (response.ok) setUsersList(await response.json());
@@ -365,7 +366,7 @@ const AdminUsers = () => {
         if (userItem.id === user?.id) return;
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`/api/users/${userItem.id}/role`, {
+            const res = await fetch(`${API_URL}/api/users/${userItem.id}/role`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ is_admin: !userItem.is_admin })
@@ -382,7 +383,7 @@ const AdminUsers = () => {
         if (!window.confirm("Foydalanuvchini rostdan ham o'chirmoqchimisiz?")) return;
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch(`/api/users/${userId}`, {
+            const res = await fetch(`${API_URL}/api/users/${userId}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             });

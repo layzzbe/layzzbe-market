@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { API_URL } from '../utils/api';
 
 const WishlistContext = createContext();
 
 const API = (path, method = 'GET') => {
     const token = localStorage.getItem('token');
-    return fetch(path, {
+    return fetch(`${API_URL}${path}`, {
         method,
         headers: {
             'Content-Type': 'application/json',

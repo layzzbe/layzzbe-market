@@ -12,6 +12,7 @@ import {
     Activity,
     Shield
 } from 'lucide-react';
+import { API_URL } from '../utils/api';
 
 const AdminLayout = () => {
     const location = useLocation();
@@ -29,7 +30,7 @@ const AdminLayout = () => {
             }
 
             try {
-                const response = await fetch('/api/auth/me', {
+                const response = await fetch(`${API_URL}/api/auth/me`, {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
 
@@ -112,8 +113,8 @@ const AdminLayout = () => {
                                 key={link.path}
                                 to={link.path}
                                 className={`flex items-center gap-3 px-4 py-3.5 rounded-xl font-bold transition-all duration-300 ${isActive
-                                        ? "bg-neon-purple/10 text-neon-purple border border-neon-purple/30 shadow-[0_0_15px_rgba(176,0,255,0.15)]"
-                                        : "text-slate-400 hover:bg-slate-800 hover:text-white border border-transparent"
+                                    ? "bg-neon-purple/10 text-neon-purple border border-neon-purple/30 shadow-[0_0_15px_rgba(176,0,255,0.15)]"
+                                    : "text-slate-400 hover:bg-slate-800 hover:text-white border border-transparent"
                                     }`}
                             >
                                 <Icon className={`w-5 h-5 ${isActive ? "text-neon-purple drop-shadow-[0_0_8px_rgba(176,0,255,0.8)]" : ""}`} />

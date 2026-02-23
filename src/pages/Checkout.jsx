@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useCurrency } from '../context/CurrencyContext';
 import { useUser } from '../context/UserContext';
 import { motion, AnimatePresence } from 'framer-motion';
+import { API_URL } from '../utils/api';
 
 const USD_TO_UZS = 12800;
 
@@ -77,7 +78,7 @@ const Checkout = () => {
         if (!token) { navigate('/login'); return; }
 
         try {
-            const res = await fetch('/api/orders/process-wallet-payment', {
+            const res = await fetch(`${API_URL}/api/orders/process-wallet-payment`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 // Only send product_id + quantity — backend reads real prices from DB
@@ -124,7 +125,7 @@ const Checkout = () => {
         if (!token) { navigate('/login'); return; }
 
         try {
-            const res = await fetch('/api/orders/generate-payment-link', {
+            const res = await fetch(`${API_URL}/api/orders/generate-payment-link`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({

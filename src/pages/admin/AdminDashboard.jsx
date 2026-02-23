@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useOutletContext } from 'react-router-dom';
 import { Users, Package, ShoppingCart, TrendingUp, Activity, RefreshCw } from 'lucide-react';
 import { useProducts } from '../../context/ProductContext';
+import { API_URL } from '../../utils/api';
 
 const USD_TO_UZS = 12800;
 
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
-            const res = await fetch('/api/admin/stats', {
+            const res = await fetch(`${API_URL}/api/admin/stats`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (res.ok) setStats(await res.json());

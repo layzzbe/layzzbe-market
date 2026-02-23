@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import { API_URL } from '../utils/api';
 
 // ── Toast ─────────────────────────────────────────────────────
 const Toast = ({ message, type }) => (
@@ -51,7 +52,7 @@ const Dashboard = () => {
                 const userData = await fetchUser();
                 if (!userData) { navigate('/login'); return; }
 
-                const ordersRes = await fetch('/api/orders/my', {
+                const ordersRes = await fetch(`${API_URL}/api/orders/my`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (ordersRes.ok) setOrders(await ordersRes.json());

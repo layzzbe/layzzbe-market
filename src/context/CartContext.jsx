@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import { API_URL } from '../utils/api';
 
 const CartContext = createContext();
 
 const API = (path, method = 'GET', body) => {
     const token = localStorage.getItem('token');
-    return fetch(path, {
+    return fetch(`${API_URL}${path}`, {
         method,
         headers: {
             'Content-Type': 'application/json',

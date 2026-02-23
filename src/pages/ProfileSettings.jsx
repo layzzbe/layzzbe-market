@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Phone, Mail, Lock, Save, CheckCircle, AlertCircle, Eye, EyeOff, Shield, Activity, ArrowLeft } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { API_URL } from '../utils/api';
 
 // ── Toast ─────────────────────────────────────────────────────
 const Toast = ({ message, type }) => (
@@ -10,8 +11,8 @@ const Toast = ({ message, type }) => (
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: -10, scale: 0.95 }}
         className={`fixed top-6 right-6 z-[300] flex items-center gap-3 px-5 py-4 rounded-2xl border shadow-2xl font-bold text-sm ${type === 'success'
-                ? 'bg-green-500/10 border-green-500/40 text-green-300 shadow-[0_0_20px_rgba(74,222,128,0.15)]'
-                : 'bg-red-500/10 border-red-500/40 text-red-300 shadow-[0_0_20px_rgba(239,68,68,0.15)]'
+            ? 'bg-green-500/10 border-green-500/40 text-green-300 shadow-[0_0_20px_rgba(74,222,128,0.15)]'
+            : 'bg-red-500/10 border-red-500/40 text-red-300 shadow-[0_0_20px_rgba(239,68,68,0.15)]'
             }`}
     >
         {type === 'success' ? <CheckCircle className="w-5 h-5 shrink-0" /> : <AlertCircle className="w-5 h-5 shrink-0" />}
@@ -95,7 +96,7 @@ const ProfileSettings = () => {
             const token = localStorage.getItem('token');
             if (!token) { navigate('/login'); return; }
             try {
-                const res = await fetch('/api/auth/me', {
+                const res = await fetch(`${API_URL}/api/auth/me`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (!res.ok) throw new Error();
@@ -118,7 +119,7 @@ const ProfileSettings = () => {
         setIsSaving(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('/api/auth/me', {
+            const res = await fetch(`${API_URL}/api/auth/me`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ full_name: fullName, phone })
@@ -140,7 +141,7 @@ const ProfileSettings = () => {
         setIsChangingPass(true);
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('/api/auth/change-password', {
+            const res = await fetch(`${API_URL}/api/auth/change-password`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ current_password: currentPass, new_password: newPass })
@@ -361,8 +362,8 @@ const ProfileSettings = () => {
                                         <div className="flex gap-1 flex-1">
                                             {[1, 2, 3, 4].map(i => (
                                                 <div key={i} className={`h-1 flex-1 rounded-full transition-all duration-300 ${newPass.length >= i * 3
-                                                        ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-neon-blue' : 'bg-green-400'
-                                                        : 'bg-slate-800'
+                                                    ? i <= 1 ? 'bg-red-500' : i <= 2 ? 'bg-yellow-500' : i <= 3 ? 'bg-neon-blue' : 'bg-green-400'
+                                                    : 'bg-slate-800'
                                                     }`} />
                                             ))}
                                         </div>

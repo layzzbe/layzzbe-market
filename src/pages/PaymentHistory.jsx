@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { CreditCard, TrendingUp, TrendingDown, Clock, ArrowLeft, Wallet, Plus, AlertCircle, Activity } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useUser } from '../context/UserContext';
+import { API_URL } from '../utils/api';
 
 const USD_TO_UZS = 12800;
 const formatUZS = (uzs) => Math.round(uzs).toLocaleString('uz-UZ') + " so'm";
@@ -41,7 +42,7 @@ const TopUpModal = ({ balance, onClose, onSuccess }) => {
         setIsLoading(true); setError('');
         try {
             const token = localStorage.getItem('token');
-            const res = await fetch('/api/balance/topup', {
+            const res = await fetch(`${API_URL}/api/balance/topup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
                 body: JSON.stringify({ amount_uzs: val })
@@ -123,7 +124,7 @@ const PaymentHistory = () => {
         const token = localStorage.getItem('token');
         if (!token) { navigate('/login'); return; }
         try {
-            const txRes = await fetch('/api/transactions/my', {
+            const txRes = await fetch(`${API_URL}/api/transactions/my`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             if (txRes.ok) setTransactions(await txRes.json());
